@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+   
+    <appender name="CONSOLE"
+        class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                %d %p %c{1.} [%t] %m%n
+            </Pattern>
+        </layout>
+    </appender>
+    
+    <appender name="FILE-ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>app.log</file>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>archived_logs/app.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<maxFileSize>10MB</maxFileSize>
+			<totalSizeCap>100MB</totalSizeCap>
+			<maxHistory>5</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d %p %c{1.} [%t] %m%n</pattern>
+		</encoder>
+	</appender>
+	
+	
+	<logger name="com.sample" level="debug" additivity="false">
+        <appender-ref ref="FILE-ROLLING" />
+        <appender-ref ref="CONSOLE" />
+    </logger>
+    
+    <logger name="org.springframework" level="error" additivity="false">
+        <appender-ref ref="FILE-ROLLING" />
+        <appender-ref ref="CONSOLE" />
+    </logger>
+    
+    <logger name="org.springframework" level="info" additivity="false">
+        <appender-ref ref="FILE-ROLLING" />
+    </logger>
+
+</configuration>
